@@ -12,7 +12,7 @@ Model name is converted to lowercase for the collection name:
 """
 
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 
 # Example schemas (replace with your own):
 
@@ -51,3 +51,18 @@ class Job(BaseModel):
     location: str = Field(..., description="Location string (e.g., Remote • US)")
     tags: List[str] = Field(default_factory=list, description="Skill or attribute tags")
     match: int = Field(0, ge=0, le=100, description="Match score 0-100")
+
+class LinkedInProfile(BaseModel):
+    """
+    LinkedIn profiles collection schema
+    Collection name: "linkedinprofile"
+    """
+    linkedin_id: str = Field(..., description="LinkedIn member id")
+    first_name: Optional[str] = Field(None, description="Localized first name")
+    last_name: Optional[str] = Field(None, description="Localized last name")
+    full_name: Optional[str] = Field(None, description="Convenience full name")
+    email: Optional[str] = Field(None, description="Primary email from LinkedIn")
+    headline: Optional[str] = Field(None, description="Profile headline")
+    avatar_url: Optional[str] = Field(None, description="Profile picture URL if available")
+    locale: Optional[str] = Field(None, description="Locale, e.g., en_US")
+    raw: Optional[Dict[str, Any]] = Field(None, description="Raw payload for debugging and future mapping")
